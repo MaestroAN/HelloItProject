@@ -13,4 +13,6 @@ public interface LotteryDAO {
     public Lottery findById(long id);
 
     public void update(long id);
+
+    public void chooseWinner(long id);
 }

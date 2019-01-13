@@ -36,8 +36,6 @@ public class Lottery {
     @Column(name = "win_participant_id")
     private long winParticipantID;
 
-    @OneToMany(mappedBy = "lottery", cascade = CascadeType.MERGE)
-    List<Participant> participants;
 
 
     public Lottery(){}
@@ -50,13 +48,6 @@ public class Lottery {
         this.winParticipantID = winParticipantID;
     }
 
-    public List<Participant> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
-    }
 
     public long getId() {
         return id;

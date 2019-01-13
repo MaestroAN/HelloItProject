@@ -28,8 +28,10 @@ public class ParticipantDAOHibernateImpl implements ParticipantDAO {
         Session currentSession = entityManager.unwrap(Session.class);
 //        get lottery by id
         Lottery lottery = currentSession.get(Lottery.class, participant.getLottery().getId());
+        Query theQuery = currentSession.createQuery("select  count (*) from Participant p where p.lottery.id=:lottery ").setParameter("lottery", participant.getLottery().getId());
+        Long count = (Long)theQuery.uniqueResult();
 //        check if end date is present
-        if(lottery.getEndDate() == null){
+        if(lottery.getEndDate() == null && count < lottery.getlLimit()){
             // null save participant only if 21 or higher
             if(participant.getAge() >= 21) {
                 currentSession.save(participant);

@@ -43,8 +43,19 @@ public class LotteryRestController {
         return lottery;
     }
 
+    /*@PostMapping("/start-registration")
+    public String register(@RequestBody @Valid Lottery lottery){
+        lottery.setWinParticipantID(0);
+        lottery.setEndDate(null);
+        lotteryDAO.register(lottery);
+        return "Hello World";
+    }*/
+
     @PostMapping("/stop-registration/{id}")
     public void update(@PathVariable long id) {
         lotteryDAO.update(id);
     }
+
+    @PostMapping("/choose-winner/{id}")
+    public void chooseWinner(@PathVariable long id){ lotteryDAO.chooseWinner(id);}
 }

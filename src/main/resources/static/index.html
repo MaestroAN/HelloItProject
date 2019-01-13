@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+</HEAD>
+<BODY>
+
+
+
+<FORM NAME="lottery">
+
+
+   <table border=1>
+      <tr>
+         <td>
+             Lottery Name:<br>
+             <textarea name="title" cols="80" rows="4" ></textarea>
+         </td>
+      </tr>
+      <tr>
+         <td>
+             Maximum number of participants:<br>
+             <input type="text" name="lLimit" ></text>
+         </td>
+      </tr>
+   </table>
+
+   <button onclick="send_lottery_info()">Click me to send</button>
+
+    <script>
+        function send_lottery_info() {
+
+// Sending and receiving data in JSON format using POST method
+//
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8080/lottery/start-registration";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    // Success!
+                    var data = JSON.parse(xhr.responseText);
+                    alert(data);
+                } else {
+                    alert('We reached our target server, but it returned an error');
+                }
+            };
+
+            xhr.onerror = function() {
+                alert('There was a connection error of some sort');
+            };
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    console.log(json.title + ", " + json.lLimit);
+                }
+            };
+//var data = JSON.stringify({ "title": document.lottery.lLimit.value, "lLimit": document.lottery.lLimit.value});
+            var data = JSON.stringify({ "title": document.lottery.title.value, "lLimit": document.lottery.lLimit.value});
+            xhr.send(data);
+
+
+            /*alert("The data was sent");*/
+
+        }
+
+
+
+
+    </script>
+
+</FORM>
+</BODY>
+

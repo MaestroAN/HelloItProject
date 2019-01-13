@@ -1,6 +1,7 @@
 package lv.helloit.project.dao;
 
 import lv.helloit.project.entity.Lottery;
+import lv.helloit.project.entity.Participant;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,18 @@ public class LotteryDAOHibernateImpl implements LotteryDAO {
              lottery.setEndDate(new Date());
              currentSession.saveOrUpdate(lottery);
          }
+    }
+
+    @Override
+    @Transactional
+    public void chooseWinner(long id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Lottery lottery = currentSession.get(Lottery.class, id);
+        Long lotteryID = lottery.getId();
+        Query theQuery = currentSession.createQuery("select id from Participant p where p.lottery.id=:lottery order by rand()" ).setParameter("lottery", lotteryID).setMaxResults(1);
+        Long winparticipantID = (Long)theQuery.uniqueResult();
+        lottery.setWinParticipantID(winparticipantID);
+        currentSession.saveOrUpdate(lottery);
+
     }
 }
