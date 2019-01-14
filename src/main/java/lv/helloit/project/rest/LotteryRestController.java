@@ -36,11 +36,11 @@ public class LotteryRestController {
     }
 
     @PostMapping("/start-registration")
-    public Lottery register(@RequestBody @Valid Lottery lottery){
+    public String register(@RequestBody @Valid Lottery lottery){
         lottery.setWinParticipantID(0);
         lottery.setEndDate(null);
         lotteryDAO.register(lottery);
-        return lottery;
+        return "{\"status\": \"OK\", \"id\":" +lottery.getId() + "}";
     }
 
     /*@PostMapping("/start-registration")

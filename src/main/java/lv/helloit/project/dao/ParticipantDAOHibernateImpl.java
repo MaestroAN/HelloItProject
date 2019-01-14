@@ -9,7 +9,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Repository
 public class ParticipantDAOHibernateImpl implements ParticipantDAO {
@@ -28,6 +31,23 @@ public class ParticipantDAOHibernateImpl implements ParticipantDAO {
         Session currentSession = entityManager.unwrap(Session.class);
 //        get lottery by id
         Lottery lottery = currentSession.get(Lottery.class, participant.getLottery().getId());
+
+//        dateconversion
+        System.out.println(lottery.getStartDate());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyy");
+        String date = simpleDateFormat.format(lottery.getStartDate());
+        int emailLengthInt = participant.getEmail().length();
+        String emailLengthString;
+        if (emailLengthInt < 10){
+             emailLengthString = "0"+emailLengthInt;
+        } else {
+             emailLengthString = ""+emailLengthInt;
+        }
+        long randomNum = ThreadLocalRandom.current().nextLong(10000000, 99999999);
+        String code = date + emailLengthString + randomNum;
+        participant.setCode(code);
+
+
         Query theQuery = currentSession.createQuery("select  count (*) from Participant p where p.lottery.id=:lottery ").setParameter("lottery", participant.getLottery().getId());
         Long count = (Long)theQuery.uniqueResult();
 //        check if end date is present

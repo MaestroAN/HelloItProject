@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="functions.js"></script>
+</head>
+<body>
+<center>
+
+<h3>
+LOTTERY: ADMIN MENU: START LOTTERY REGISTRATION
+<h3>
+
+<FORM NAME="lottery">
+
+
+   <table border=1>
+      <tr>
+         <td>
+             Please type new Lottery Title:<br>
+             <textarea name="title" cols="80" rows="4" autofocus="autofocus"></textarea>
+         </td>
+      </tr>
+      <tr>
+         <td>
+             Please type Maximum number of participants:<br>
+             <input type="text" name="lLimit" ></text>
+         </td>
+      </tr>
+   </table>
+
+   <br><button onclick="send_lottery_info()">Click me to start new lottery</button>
+
+</form>
+
+<script>
+  function getmethod() {
+    return "POST";
+  };
+
+  function geturl() {
+    return "lottery/start-registration";
+  };
+
+  function makedata() {
+      return JSON.stringify({ "title": document.lottery.title.value, "lLimit": document.lottery.lLimit.value});
+  };
+
+  function createmessage(json) {
+    if (json.status == 'OK')
+    {
+       return '(Status='+json.status +'). The new Lottery with Title: "'+document.lottery.title.value+'" was started. The Lottery ID is "' + json.id + '"';
+    }
+    else
+    {
+       return '(Status='+json.status +'). The new Lottery was not created the reason is "' + json.reason+ '"';
+    };
+   };
+</script>
+
+</center>
+</body>
+</html>

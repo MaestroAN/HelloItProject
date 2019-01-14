@@ -66,8 +66,10 @@ public class LotteryDAOHibernateImpl implements LotteryDAO {
         Long lotteryID = lottery.getId();
         Query theQuery = currentSession.createQuery("select id from Participant p where p.lottery.id=:lottery order by rand()" ).setParameter("lottery", lotteryID).setMaxResults(1);
         Long winparticipantID = (Long)theQuery.uniqueResult();
-        lottery.setWinParticipantID(winparticipantID);
-        currentSession.saveOrUpdate(lottery);
+        if (lottery.getWinParticipantID() == 0 && lottery.getEndDate() != null) {
+            lottery.setWinParticipantID(winparticipantID);
+            currentSession.saveOrUpdate(lottery);
+        }
 
     }
 }

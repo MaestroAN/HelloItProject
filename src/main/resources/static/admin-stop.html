@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="functions.js"></script>
+
+</head>
+<body>
+<center>
+
+<h3>
+LOTTERY: ADMIN MENU: STOP LOTTERY
+<h3>
+
+<FORM NAME="lottery">
+
+
+   <table border=1>
+      <tr>
+         <td>
+             Please type Lottery ID to STOP:<br>
+             <input type="text" name="id" ></text>
+         </td>
+      </tr>
+   </table>
+
+   <br><button onclick="send_lottery_info()">Click me to stop lottery</button>
+
+</form>
+
+<script>
+  function getmethod() {
+    return "POST";
+  };
+
+  function geturl() {
+    return "lottery/stop-registration/"+document.lottery.id.value;
+  };
+
+  function makedata() {
+    return JSON.stringify({"id": document.lottery.id.value});
+  };
+
+  function createmessage(json) {
+    if (json.status == 'OK')
+    {
+       return '(Status='+json.status +'). The Lottery id : "'+document.lottery.id.value+'" was stopped.';
+    }
+    else
+    {
+       return '(Status='+json.status +'). The Lottery was not stopped the reason is "' + json.reason+ '"';
+    };
+   };
+</script>
+
+</center>
+</body>
+</html>

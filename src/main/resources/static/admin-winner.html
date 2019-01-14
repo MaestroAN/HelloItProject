@@ -1,0 +1,57 @@
+<html>
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="functions.js"></script>
+
+</head>
+<body>
+<center>
+
+<h3>
+LOTTERY: ADMIN MENU: CHOOSE WINNER
+<h3>
+
+<FORM NAME="lottery">
+
+
+   <table border=1>
+      <tr>
+         <td>
+             Please type Lottery ID to choose WINNER:<br>
+             <input type="text" name="id" ></text>
+         </td>
+      </tr>
+   </table>
+
+   <br><button onclick="send_lottery_info()">Click me to choose lottery winner</button>
+
+</form>
+
+<script>
+  function getmethod() {
+    return "POST";
+  };
+
+  function geturl() {
+    return "lottery/choose-winner/"+document.lottery.id.value;
+  };
+  function makedata() {
+    return JSON.stringify({ "id": document.lottery.id.value });
+  };
+
+  function createmessage(json) {
+    if (json.status == 'OK')
+    {
+       return '(Status='+json.status +'). We got WINNER. The WINNER CODE is "' + json.winnerCode + '"';
+    }
+    else
+    {
+       return '(Status='+json.status +'). The WINNER was not chosen the reason is "' + json.reason+ '"';
+    };
+   };
+</script>
+
+</center>
+</body>
+</html>

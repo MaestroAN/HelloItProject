@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin-Status</title>
+</head>
+<body>
+    <h3>
+        LOTTERY: ADMIN MENU: STATUS OF ALL LOTTERIES
+    <h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Lottery limit</th>
+        <th>Winner ID</th>
+    </tr>
+    </thead>
+    <tbody id="table-body" align="center">
+
+    </tbody>
+</table>
+
+<script src="lotteryService.js" type="text/javascript"></script>
+<script>
+    loadLotteries();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="functions.js"></script>
+
+</head>
+<body>
+<center>
+
+<h3>
+LOTTERY: PARTICIPANT MENU: REGISTRATION
+<h3>
+
+<FORM NAME="lottery">
+
+
+   <table border=1>
+      <tr>
+         <td>
+             Please type lottery id where to participate:<br>
+             <input type="number" name="id" ></text>
+         </td>
+      </tr>
+      <tr>
+         <td>
+             Please type your email:<br>
+             <input type="text" name="email" ></text>
+         </td>
+      </tr>
+      <tr>
+         <td>
+             Please type your Age:<br>
+             <input type="number" name="age" ></text>
+         </td>
+      </tr>
+   </table>
+
+   <br><button onclick="send_lottery_info()">Click me to register in lottery</button>
+
+</form>
+
+<script>
+  function getmethod() {
+    return "POST";
+  };
+
+  function geturl() {
+    return "user/register";
+  };
+
+  function makedata() {
+    return JSON.stringify({ "lottery": parseInt(document.lottery.id.value), "email": document.lottery.email.value, "age": parseInt(document.lottery.age.value), "code": "server-generated"});
+  };
+
+  function createmessage(json) {
+    if (json.status == 'OK')
+    {
+       return '(Status='+json.status +'). The Lottery id is : "'+document.lottery.id.value+'" and Your lottery CODE is "'+document.lottery.code.value+'" Please write down your Lottery ID and your Lottery CODE, you will need it later to check your status of the Lottery.';
+    }
+    else
+    {
+       return '(Status='+json.status +'). Your registration failed and the reason is "' + json.reason+ '"';
+    };
+  };
+</script>
+
+</center>
+</body>
+</html>
