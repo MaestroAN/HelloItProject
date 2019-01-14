@@ -26,7 +26,7 @@ public class AdminDAOHibernateImpl implements AdminDAO {
         Session currentSession = entityManager.unwrap(Session.class);
         Query theQuery = currentSession.createQuery("from Admin", Admin.class);
         List<Admin> admins = theQuery.getResultList();
-        return  admins;
+        return admins;
     }
 
     @Override

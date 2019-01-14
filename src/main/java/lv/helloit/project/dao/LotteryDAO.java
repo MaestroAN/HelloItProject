@@ -9,7 +9,7 @@ public interface LotteryDAO {
 
     public List<Lottery> findAll();
 
-    public void register (Lottery lottery);
+    public void register(Lottery lottery);
 
     public Lottery findById(long id);
 

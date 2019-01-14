@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
@@ -51,11 +52,11 @@ public class LotteryDAOHibernateImpl implements LotteryDAO {
     @Transactional
     public void update(long id) {
         Session currentSession = entityManager.unwrap(Session.class);
-         Lottery lottery = currentSession.get(Lottery.class, id);
-         if (lottery.getEndDate() == null) {
-             lottery.setEndDate(new Date());
-             currentSession.saveOrUpdate(lottery);
-         }
+        Lottery lottery = currentSession.get(Lottery.class, id);
+        if (lottery.getEndDate() == null) {
+            lottery.setEndDate(new Date());
+            currentSession.saveOrUpdate(lottery);
+        }
     }
 
     @Override
@@ -64,8 +65,8 @@ public class LotteryDAOHibernateImpl implements LotteryDAO {
         Session currentSession = entityManager.unwrap(Session.class);
         Lottery lottery = currentSession.get(Lottery.class, id);
         Long lotteryID = lottery.getId();
-        Query theQuery = currentSession.createQuery("select id from Participant p where p.lottery.id=:lottery order by rand()" ).setParameter("lottery", lotteryID).setMaxResults(1);
-        Long winparticipantID = (Long)theQuery.uniqueResult();
+        Query theQuery = currentSession.createQuery("select id from Participant p where p.lottery.id=:lottery order by rand()").setParameter("lottery", lotteryID).setMaxResults(1);
+        Long winparticipantID = (Long) theQuery.uniqueResult();
         Participant participant = currentSession.get(Participant.class, winparticipantID);
         if (lottery.getWinParticipantID() == 0 && lottery.getEndDate() != null) {
             lottery.setWinParticipantID(winparticipantID);

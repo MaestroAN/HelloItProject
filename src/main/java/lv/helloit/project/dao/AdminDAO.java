@@ -7,5 +7,5 @@ import java.util.List;
 public interface AdminDAO {
     public List<Admin> findAll();
 
-    public void save (Admin admin);
+    public void save(Admin admin);
 }

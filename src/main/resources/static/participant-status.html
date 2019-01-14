@@ -1,72 +1,77 @@
 <html>
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
 
-<script type="text/javascript" src="functions.js"></script>
+  <script type="text/javascript" src="functions.js"></script>
 
 </head>
 <body>
 <center>
 
-<h3>
-LOTTERY: PARTICIPANT MENU: REQUEST LOTTERY STATUS
-<h3>
+  <h3>
+    LOTTERY: PARTICIPANT MENU: REQUEST LOTTERY STATUS
+    <h3>
 
-<FORM NAME="lottery">
+      <FORM NAME="lottery">
 
 
-   <table border=1>
-      <tr>
-         <td>
-             Please type your lottery id:<br>
-             <input type="text" name="id" ></text>
-         </td>
-      </tr>
-      <tr>
-         <td>
-             Please type your email:<br>
-             <input type="text" name="email" ></text>
-         </td>
-      </tr>
-      <tr>
-         <td>
-             Please type your lottery code:<br>
-             <input type="text" name="code" ></text>
-         </td>
-      </tr>
-   </table>
+        <table border=1>
+          <tr>
+            <td>
+              Please type your lottery id:<br>
+              <input type="text" name="id"></text>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Please type your email:<br>
+              <input type="text" name="email"></text>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Please type your lottery code:<br>
+              <input type="text" name="code"></text>
+            </td>
+          </tr>
+        </table>
 
-   <br><button onclick="send_lottery_info()">Click me to request your lottery status</button>
+        <br>
+        <button onclick="send_lottery_info()">Click me to request your lottery status</button>
 
-</form>
+      </form>
 
-<script>
-  function getmethod() {
-    return "GET";
-  };
+      <script>
+          function getmethod() {
+              return "POST";
+          };
 
-  function geturl() {
-    return "user/status";
-  };
+          function geturl() {
+              return "user/status";
+          };
 
-  function makedata() {
-    return JSON.stringify({ "lottery": parseInt(document.lottery.id.value) , "email": document.lottery.email.value, "code": document.lottery.code.value });
-  };
+          function makedata() {
+              return JSON.stringify({
+                  "lottery": parseInt(document.lottery.id.value),
+                  "email": document.lottery.email.value,
+                  "code": document.lottery.code.value
+              });
+          };
 
-  function createmessage(json) {
-    switch (true) {
-       case (json.status == 'WIN'):
-          return '(Status='+json.status +'). Congratulations, you are the WINNER!';
-       case (json.status == 'LOOSE'):
-          return '(Status='+json.status +'). Sorry you did NOT win, Please try to register another lottery, Good Luck.';
-       case (json.status == 'PENDING'):
-          return '(Status='+json.status +'). The Lottery is not stopped yet.Please check it again later.';
-       case (json.status == 'ERROR'):
-          return '(Status='+json.status +'). It not possible to check your lottery right now please try to check it again later.';
-    }
-    return '(Status='+json.status +'). Unknown status. Something is wrong please try again later.';
-  };
-</script>
+          function createmessage(json) {
+              switch (true) {
+                  case (json.status == 'WIN'):
+                      return '(Status=' + json.status + '). Congratulations, you are the WINNER!';
+                  case (json.status == 'LOOSE'):
+                      return '(Status=' + json.status + '). Sorry you did NOT win, Please try to register another lottery, Good Luck.';
+                  case (json.status == 'PENDING'):
+                      return '(Status=' + json.status + '). The Lottery is not stopped yet.Please check it again later.';
+                  case (json.status == 'ERROR'):
+                      return '(Status=' + json.status + '). It not possible to check your lottery right now please try to check it again later.';
+              }
+              return "Error, try again later";
+          };
+      </script>
 
 </center>
 </body>

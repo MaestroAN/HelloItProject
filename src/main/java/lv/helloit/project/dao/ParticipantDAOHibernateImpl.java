@@ -55,4 +55,37 @@ public class ParticipantDAOHibernateImpl implements ParticipantDAO {
             }
         }
     }
+
+    @Override
+    @Transactional
+    public String getStatus(Participant participant) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        System.out.println(participant.getCode());
+        Query theQuery = currentSession.createQuery("from Participant p where p.code=:code").setParameter("code", participant.getCode());
+        Participant participantFromDB = (Participant) theQuery.uniqueResult();
+        System.out.println(participantFromDB.getCode());
+//        Check participant with DB
+        if (participant.getLottery().getId() == participantFromDB.getLottery().getId() && participant.getEmail().equals(participantFromDB.getEmail()) ){
+            System.out.println("userIsReal");
+//            Lottery data
+            Lottery lottery = currentSession.get(Lottery.class, participant.getLottery().getId());
+            System.out.println(participant.getLottery().getId());
+//            Pending
+            if (lottery.getWinParticipantID() == 0){
+                return "{\"status\": \"PENDING\"}";
+            }
+//            Win or Loose
+            if (lottery.getWinParticipantID() != participantFromDB.getId()){
+                return "{\"status\": \"LOOSE\"}";
+            }
+            if (lottery.getWinParticipantID() == participantFromDB.getId()){
+                return "{\"status\": \"WIN\"}";
+            } else {
+                return "{\"status\": \"ERROR\"}";
+            }
+
+        }
+
+        return "{\"status\": \"ERROR\"}";
+    }
 }
