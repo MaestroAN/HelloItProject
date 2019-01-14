@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "participant")
+@Table(name = "participant", uniqueConstraints = {@UniqueConstraint(columnNames = "code")})
 public class Participant {
 
     @Id
