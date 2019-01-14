@@ -28,11 +28,26 @@ LOTTERY: ADMIN MENU: START LOTTERY REGISTRATION
       </tr>
    </table>
 
-   <br><button onclick="send_lottery_info()">Click me to start new lottery</button>
+   <br><button onclick="validation()">Click me to start new lottery</button>
 
 </form>
 
 <script>
+    function validation() {
+        if (document.lottery.title.value === ""){
+            alert("ERROR:title is empty");
+        } else if (isNaN(document.lottery.lLimit.value) == true){
+            alert("ERROR: not a number");
+        } else if (document.lottery.lLimit.value < 1){
+            alert("ERROR: limit cannot be lesser then 1")
+        }
+        else{
+            send_lottery_info();
+        }
+
+
+    }
+
   function getmethod() {
     return "POST";
   };

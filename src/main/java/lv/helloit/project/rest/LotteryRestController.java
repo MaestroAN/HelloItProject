@@ -2,9 +2,9 @@ package lv.helloit.project.rest;
 
 import lv.helloit.project.dao.LotteryDAO;
 import lv.helloit.project.entity.Lottery;
-import org.springframework.http.ResponseEntity;
+import lv.helloit.project.entity.Participant;
+import org.hibernate.JDBCException;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -39,23 +39,33 @@ public class LotteryRestController {
     public String register(@RequestBody @Valid Lottery lottery){
         lottery.setWinParticipantID(0);
         lottery.setEndDate(null);
-        lotteryDAO.register(lottery);
+        try {
+            lotteryDAO.register(lottery);
+        } catch (JDBCException e){
+            return "{\"status\": \"FAIL\", \"reason\": \""+e.getSQLException().getMessage()+"\"}";
+        }
         return "{\"status\": \"OK\", \"id\":" +lottery.getId() + "}";
     }
 
-    /*@PostMapping("/start-registration")
-    public String register(@RequestBody @Valid Lottery lottery){
-        lottery.setWinParticipantID(0);
-        lottery.setEndDate(null);
-        lotteryDAO.register(lottery);
-        return "Hello World";
-    }*/
-
     @PostMapping("/stop-registration/{id}")
-    public void update(@PathVariable long id) {
-        lotteryDAO.update(id);
+    public String update(@PathVariable long id) {
+        try {
+            lotteryDAO.update(id);
+        }
+        catch (NullPointerException e){
+            return "{\"status\": \"FAIL\", \"reason\": \""+e.getMessage()+"\"}";
+        }
+        return "{\"status\": \"OK\"}";
     }
 
     @PostMapping("/choose-winner/{id}")
-    public void chooseWinner(@PathVariable long id){ lotteryDAO.chooseWinner(id);}
+    public String chooseWinner(@PathVariable long id){
+        Participant p;
+        try {
+            p = lotteryDAO.chooseWinner(id);
+        } catch (NullPointerException e){
+            return "{\"status\": \"FAIL\", \"reason\": \""+e.getMessage()+"\"}";
+        }
+        return "{\"status\": \"OK\", \"winnerCode\":\""+p.getCode()+"\"}";
+    }
 }

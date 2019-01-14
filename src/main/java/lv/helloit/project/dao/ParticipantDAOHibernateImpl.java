@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Repository
@@ -33,7 +31,6 @@ public class ParticipantDAOHibernateImpl implements ParticipantDAO {
         Lottery lottery = currentSession.get(Lottery.class, participant.getLottery().getId());
 
 //        dateconversion
-        System.out.println(lottery.getStartDate());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyy");
         String date = simpleDateFormat.format(lottery.getStartDate());
         int emailLengthInt = participant.getEmail().length();

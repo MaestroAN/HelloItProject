@@ -24,11 +24,21 @@ LOTTERY: ADMIN MENU: STOP LOTTERY
       </tr>
    </table>
 
-   <br><button onclick="send_lottery_info()">Click me to stop lottery</button>
+   <br><button onclick="validation()">Click me to stop lottery</button>
 
 </form>
 
 <script>
+    function validation() {
+        if (isNaN(document.lottery.id.value) == true) {
+            alert("ERROR: not a number");
+        }else if (document.lottery.id.value < 1) {
+            alert("ERROR: limit cannot be lesser then 1")
+        } else {
+            send_lottery_info();
+        }
+    }
+
   function getmethod() {
     return "POST";
   };

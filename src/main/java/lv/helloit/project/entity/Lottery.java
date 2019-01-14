@@ -1,13 +1,11 @@
 package lv.helloit.project.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
+
 
 @Entity
 @Table(name = "lottery", uniqueConstraints = {@UniqueConstraint(columnNames = "title")})
@@ -18,7 +16,7 @@ public class Lottery {
     @Column(name = "id")
     private long id;
 
-    @NotNull(message = "Lottery title is required")
+    @NotBlank(message = "Lottery title is required")
     @Size(max = 60)
     @Column(name = "title")
     private String title;

@@ -17,10 +17,14 @@ public class ParticipantRestController {
     }
 
     @PostMapping("/register")
-    public Participant register(@RequestBody @Valid Participant participant){
+    public String register(@RequestBody @Valid Participant participant){
         participant.setId(0);
-        participantDAO.register(participant);
-        return participant;
+        try {
+            participantDAO.register(participant);
+        } catch (NullPointerException e){
+            return "{\"status\": \"FAIL\", \"reason\": \""+e.getMessage()+"\"}";
+        }
+        return "{\"status\": \"OK\", \"code\":\""+participant.getCode()+"\"}";
     }
 
 

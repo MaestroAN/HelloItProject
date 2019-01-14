@@ -1,6 +1,7 @@
 package lv.helloit.project.dao;
 
 import lv.helloit.project.entity.Lottery;
+import lv.helloit.project.entity.Participant;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface LotteryDAO {
 
     public void update(long id);
 
-    public void chooseWinner(long id);
+    public Participant chooseWinner(long id);
 }
